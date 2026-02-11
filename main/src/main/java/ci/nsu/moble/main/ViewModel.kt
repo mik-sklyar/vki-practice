@@ -33,21 +33,21 @@ class ViewModel : ViewModel() {
     fun submitColor() {
         val input = _colorInput.value.lowercase().trim()
         if (input.isBlank()) {
-            Log.w("ColorInput", "TextField is empty")
+            Log.e("ColorInput", "TextField is empty")
             return
         }
 
         val color = normMap[input]
         if (color != null) {
             applyColor(color)
-            Log.d("ColorInput", "Applied color: $input")
+            Log.i("ColorInput", "Applied color: $input")
         } else {
             applyColor(defaultColor)
-            Log.d("ColorInput", "incorrect input")
+            Log.w("ColorInput", "Color not found: $input")
         }
     }
 
     fun logColor(name: String) {
-        Log.d("ColorMap", "Color: $name")
+        Log.i("ColorMap", "Color: $name")
     }
 }
