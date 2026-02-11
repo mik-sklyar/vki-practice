@@ -3,22 +3,24 @@ package ci.nsu.moble.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ci.nsu.moble.main.ui.theme.PracticeTheme
 
@@ -29,8 +31,52 @@ class ComposeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PracticeTheme {
-                ColorButtonList(viewModel = viewModel)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
+                ) {
+
+                    ColorInput(viewModel)
+                    Spacer(modifier = Modifier.height(32.dp))
+                    ColorButtonList(viewModel)
+                }
             }
+        }
+    }
+}
+
+@Composable
+fun ColorInput(viewModel: ViewModel) {
+    val colorInput by viewModel.colorInput
+    val buttonColor by viewModel.buttonColor
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        OutlinedTextField(
+            value = colorInput,
+            onValueChange = { it: String ->
+                viewModel.updateColorInput(it)
+            },
+            label = { Text("Please input Color") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+        Button(
+            onClick = {
+                viewModel.submitColor()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
+        ) {
+            Text(
+                text = "Apply",
+                color = if (buttonColor.luminance() > 0.5) Color.Black else Color.White
+            )
         }
     }
 }
@@ -38,14 +84,12 @@ class ComposeActivity : ComponentActivity() {
 @Composable
 fun ColorButtonList(viewModel: ViewModel) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        viewModel.buttonData.forEach { (text, color) ->
+        Text("Available colors:")
+        viewModel.colorsMap.forEach { (text, color) ->
             Button(
-                onClick = { /* Обработка нажатия */ },
+                onClick = { viewModel.logColor(text) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = color)
             ) {
