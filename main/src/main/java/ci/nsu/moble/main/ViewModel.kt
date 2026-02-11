@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 
 class ViewModel : ViewModel() {
     private val defaultColor = Color.LightGray
-    private val colorsMap: Map<String, Color> = mapOf(
+    val colorsMap: Map<String, Color> = mapOf(
         "Red" to Color.Red,
         "Blue" to Color.Blue,
         "Green" to Color.Green,
@@ -16,7 +16,6 @@ class ViewModel : ViewModel() {
         "Magenta" to Color.Magenta,
     )
     private val normMap = colorsMap.mapKeys { it.key.lowercase() }
-
     private val _colorInput = mutableStateOf("")
     val colorInput: MutableState<String> = _colorInput
 
@@ -26,7 +25,7 @@ class ViewModel : ViewModel() {
     private fun applyColor(color: Color) {
         _buttonColor.value = color
     }
-    
+
     fun updateColorInput(newText: String) {
         _colorInput.value = newText
     }
