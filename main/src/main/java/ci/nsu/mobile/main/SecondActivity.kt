@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import ci.nsu.mobile.main.ui.main.MainFragment
 import ci.nsu.mobile.main.ui.main.ProfileFragment
 import ci.nsu.mobile.main.ui.main.SecondFragment
 import ci.nsu.mobile.main.ui.main.SettingsFragment
@@ -27,17 +26,16 @@ class SecondActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, currentFragment)
-                .setTransition(FragmentTransaction.TRANSIT_NONE)
-                .commitNow()
+                .setTransition(FragmentTransaction.TRANSIT_NONE).commitNow()
         }
 
         setupActionBar()
         setupBottomBar()
     }
 
-    private fun setupBottomBar(){
+    private fun setupBottomBar() {
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+        bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> replaceFragment(homeFragment)
                 R.id.nav_profile -> replaceFragment(profileFragment)
@@ -46,6 +44,7 @@ class SecondActivity : AppCompatActivity() {
             true
         }
     }
+
     private fun replaceFragment(fragment: Fragment) {
         // Меняем фрагмент только если он отличается от текущего
         if (currentFragment != fragment) {
