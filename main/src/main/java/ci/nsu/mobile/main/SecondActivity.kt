@@ -3,19 +3,53 @@ package ci.nsu.mobile.main
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import ci.nsu.mobile.main.ui.main.SecondFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SecondActivity : AppCompatActivity() {
+
+    private val homeFragment = SecondFragment()
+    private val profileFragment = SecondFragment()
+    private val settingsFragment = SecondFragment()
+
+    private var currentFragment: Fragment = homeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
+
+        // Устанавливаем начальный фрагмент, только если это первое создание активности
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, SecondFragment.newInstance())
-                .commitNow()
+            replaceFragment(homeFragment)
         }
+
         setupActionBar()
+        setupBottomBar()
+
+    }
+
+    private fun setupBottomBar(){
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> replaceFragment(homeFragment)
+                R.id.nav_profile -> replaceFragment(profileFragment)
+                R.id.nav_settings -> replaceFragment(settingsFragment)
+            }
+            true
+        }
+    }
+    private fun replaceFragment(fragment: Fragment) {
+        // Меняем фрагмент только если он отличается от текущего
+        if (currentFragment != fragment) {
+            currentFragment = fragment
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .commit()
+        }
     }
 
     private fun setupActionBar() {
