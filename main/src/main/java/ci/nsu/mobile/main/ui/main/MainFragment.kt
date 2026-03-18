@@ -49,6 +49,11 @@ class MainFragment : Fragment() {
     }
 
     private fun openSecondActivity(text: String) {
+        if (text.isEmpty()) {
+            showError()
+            return
+        }
+
         val context = requireContext()
 
         val intent = Intent(context, SecondActivity::class.java)
