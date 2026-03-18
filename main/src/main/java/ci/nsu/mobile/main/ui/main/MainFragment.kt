@@ -42,18 +42,16 @@ class MainFragment : Fragment() {
                 openSecondActivity(validText)
             }
         }
+        viewModel.showEmptyTextFieldErrorEvent.observe(viewLifecycleOwner) {
+            showError()
+        }
     }
 
     fun showError() {
-        Toast.makeText(requireContext(), "Поле не должно быть пустым!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "The text cannot be empty!", Toast.LENGTH_SHORT).show()
     }
 
     private fun openSecondActivity(text: String) {
-        if (text.isEmpty()) {
-            showError()
-            return
-        }
-
         val context = requireContext()
 
         val intent = Intent(context, SecondActivity::class.java)

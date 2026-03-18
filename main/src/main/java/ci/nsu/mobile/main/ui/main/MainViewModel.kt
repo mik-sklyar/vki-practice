@@ -8,14 +8,21 @@ import androidx.lifecycle.ViewModel
 class MainViewModel : ViewModel() {
 
     private val _openSecondActivityEvent = MutableLiveData<String?>()
-    val openSecondActivityEvent: LiveData<String?> = _openSecondActivityEvent
+    val openSecondActivityEvent: LiveData<String?> get() = _openSecondActivityEvent
+
+    private val _showEmptyTextFieldErrorEvent = MutableLiveData<Unit>()
+    val showEmptyTextFieldErrorEvent: LiveData<Unit> get() = _showEmptyTextFieldErrorEvent
 
     fun onButtonClicked(inputText: String = "") {
         Log.d("Lab3", "Button clicked")
 
-        val trimmedText = inputText.trim()
+        // TODO: Some logic here to process text
+        val processedText = inputText.trim()
 
-        // TODO: Some logic here
-        _openSecondActivityEvent.value = trimmedText.ifEmpty { null }
+        if (processedText.isNotEmpty()) {
+            _openSecondActivityEvent.value = processedText
+        } else {
+            _showEmptyTextFieldErrorEvent.value = Unit
+        }
     }
 }
