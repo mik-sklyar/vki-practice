@@ -5,14 +5,17 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import ci.nsu.mobile.main.ui.main.MainFragment
+import ci.nsu.mobile.main.ui.main.ProfileFragment
 import ci.nsu.mobile.main.ui.main.SecondFragment
+import ci.nsu.mobile.main.ui.main.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SecondActivity : AppCompatActivity() {
 
     private val homeFragment = SecondFragment()
-    private val profileFragment = SecondFragment()
-    private val settingsFragment = SecondFragment()
+    private val profileFragment = ProfileFragment()
+    private val settingsFragment = SettingsFragment()
 
     private var currentFragment: Fragment = homeFragment
 
@@ -22,12 +25,14 @@ class SecondActivity : AppCompatActivity() {
 
         // Устанавливаем начальный фрагмент, только если это первое создание активности
         if (savedInstanceState == null) {
-            replaceFragment(homeFragment)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, currentFragment)
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .commitNow()
         }
 
         setupActionBar()
         setupBottomBar()
-
     }
 
     private fun setupBottomBar(){
