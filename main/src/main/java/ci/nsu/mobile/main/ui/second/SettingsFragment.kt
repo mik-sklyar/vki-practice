@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.ui.main
+package ci.nsu.mobile.main.ui.second
 
 import android.os.Bundle
 import android.view.LayoutInflater

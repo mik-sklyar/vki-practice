@@ -5,9 +5,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import ci.nsu.mobile.main.ui.main.ProfileFragment
-import ci.nsu.mobile.main.ui.main.SecondFragment
-import ci.nsu.mobile.main.ui.main.SettingsFragment
+import ci.nsu.mobile.main.ui.second.ProfileFragment
+import ci.nsu.mobile.main.ui.second.SecondFragment
+import ci.nsu.mobile.main.ui.second.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SecondActivity : AppCompatActivity() {
