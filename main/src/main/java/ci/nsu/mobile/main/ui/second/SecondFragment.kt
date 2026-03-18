@@ -26,7 +26,7 @@ class SecondFragment : Fragment() {
         }
 
         val textView = view.findViewById<TextView>(R.id.message)
-        textView.text = receivedText
+        textView.text = "From main activity:\n$receivedText\n\n with Love))"
     }
 
 }
